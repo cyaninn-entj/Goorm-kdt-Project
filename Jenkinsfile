@@ -9,11 +9,11 @@ pipeline {
   // 레포지토리가 없으면 생성됨
   // Credential들에는 젠킨스 크레덴셜에서 설정한 ID를 사용
   environment {
-    dockerHubRegistry = 'how0326/tomcat' 
-    dockerHubRegistryCredential = 'docker' 
-    githubCredential = 'git_hub'
-    gitEmail = 'how0326@gmail.com'
-    gitName = 'seongwoo-choi'
+    dockerHubRegistry = 'cyaninn-entj/mini-cicd-eks-project' 
+    dockerHubRegistryCredential = 'cre-hubdocker' 
+    githubCredential = 'cre-github'
+    gitEmail = 'sounddevice3@gmail.com'
+    gitName = 'cyaninn-entj'
   }
 
   stages {
