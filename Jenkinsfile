@@ -9,7 +9,7 @@ pipeline {
   // 레포지토리가 없으면 생성됨
   // Credential들에는 젠킨스 크레덴셜에서 설정한 ID를 사용
   environment {
-    dockerHubRegistry = 'cyaninn-entj/mini-cicd-eks-project' 
+    dockerHubRegistry = 'cyaninn/demo-eks-cicd' 
     dockerHubRegistryCredential = 'cre-hubdocker' 
     githubCredential = 'cre-github'
     gitEmail = 'sounddevice3@gmail.com'
@@ -21,7 +21,7 @@ pipeline {
     // 깃허브 계정으로 레포지토리를 클론한다.
     stage('Checkout Application Git Branch') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, url: 'https://github.com/mini-cicd-project/mini-cicd-project.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: githubCredential, url: 'https://github.com/mini-cicd-eks-project/mini-cicd-project.git']]])
       }
       // steps 가 끝날 경우 실행한다.
       // steps 가 실패할 경우에는 failure 를 실행하고 성공할 경우에는 success 를 실행한다.
