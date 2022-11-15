@@ -35,20 +35,6 @@ pipeline {
       }
     }
 
-    // Maven 을 사용하여 Jar 파일 생성    
-    stage('Maven Jar Build') {
-      steps {
-        sh 'mvn clean install'  
-      }
-      post {
-        failure {
-          echo 'Maven war build failure' 
-        }
-        success {
-          echo 'Maven war build success'
-        }
-      }
-    }
     stage('Docker Image Build') {
       steps {
         // 도커 이미지 빌드
@@ -99,7 +85,7 @@ pipeline {
       steps {
         // git 계정 로그인, 해당 레포지토리의 main 브랜치에서 클론
         git credentialsId: githubCredential,
-            url: 'https://github.com/mini-cicd-project/mini-cicd-project.git',
+            url: 'https://github.com/cyaninn-entj/mini-cicd-eks-project.git',
             branch: 'main'  
 
         // 이미지 태그 변경 후 메인 브랜치에 푸시
@@ -110,7 +96,7 @@ pipeline {
         sh "git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
         sh "git branch -M main"
         sh "git remote remove origin"
-        sh "git remote add origin git@github.com:mini-cicd-project/mini-cicd-project.git"
+        sh "git remote add origin git@github.com:cyaninn-entj/mini-cicd-eks-project.git"
         sh "git push -u origin main"
       }
       post {
