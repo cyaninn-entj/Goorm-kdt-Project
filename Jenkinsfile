@@ -89,15 +89,15 @@ pipeline {
             branch: 'main'  
 
         // 이미지 태그 변경 후 메인 브랜치에 푸시
-        sh "git config --global user.email ${gitEmail}"
-        sh "git config --global user.name ${gitName}"
-        sh "sed -i 's/tomcat:.*/tomcat:${currentBuild.number}/g' deploy/production.yaml"
-        sh "git add ."
-        sh "git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
-        sh "git branch -M main"
-        sh "git remote remove origin"
-        sh "git remote add origin git@github.com:cyaninn-entj/mini-cicd-eks-project.git"
-        sh "git push -u origin main"
+        sh "sudo git config --global user.email ${gitEmail}"
+        sh "sudo git config --global user.name ${gitName}"
+        sh "sudo sed -i 's/tomcat:.*/tomcat:${currentBuild.number}/g' deploy/production.yaml"
+        sh "sudo git add ."
+        sh "sudo git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
+        sh "sudo git branch -M main"
+        sh "sudo git remote remove origin"
+        sh "sudo git remote add origin git@github.com:cyaninn-entj/mini-cicd-eks-project.git"
+        sh "sudo git push -u origin main"
       }
       post {
         failure {
