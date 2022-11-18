@@ -10,8 +10,8 @@ pipeline {
   // Credential들에는 젠킨스 크레덴셜에서 설정한 ID를 사용
   environment {
     dockerHubRegistry = 'cyaninn/demo-eks-cicd' 
-    dockerHubRegistryCredential = 'cre-hubdocker' 
-    githubCredential = 'cre-github'
+    dockerHubRegistryCredential = 'credentials-dockerHub'
+    githubCredential = 'credential-github'
     gitEmail = 'sounddevice3@gmail.com'
     gitName = 'cyaninn-entj'
   }
@@ -81,35 +81,25 @@ pipeline {
       }
     }
 
-    stage('K8S Manifest Update') {
-      steps {
-        // git 계정 로그인, 해당 레포지토리의 main 브랜치에서 클론
-        git credentialsId: githubCredential,
-            url: 'https://github.com/cyaninn-entj/mini-cicd-eks-project.git',
-            branch: 'main'  
-
-        // 이미지 태그 변경 후 메인 브랜치에 푸시
-        sh "sudo git config --global user.email ${gitEmail}"
-        sh "sudo git config --global user.name ${gitName}"
-        sh "sudo sed -i 's/tomcat:.*/tomcat:${currentBuild.number}/g' deploy/production.yaml"
-        sh "sudo git add ."
-        sh "sudo git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
-        sh "sudo git branch -M main"
-        sh "sudo git remote remove origin"
-        sh "sudo git remote add origin git@github.com:cyaninn-entj/mini-cicd-eks-project.git"
-        sh "sudo git push -u origin main"
-      }
-      post {
-        failure {
-          echo 'K8S Manifest Update failure'
-          //slackSend (color: '#FF0000', message: "FAILED: K8S Manifest Update '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        }
-        success {
-          echo 'K8s Manifest Update success'
-          //slackSend (color: '#0AC9FF', message: "SUCCESS: K8S Manifest Update '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        }
-      }
-    }
+   // updated docker image 태그를 git push 
+     stage('Deploy') { 
+         // 사전 준비
+         sh(
+            git config --global user.name ${gitName}
+            git config --global user.email ${gitEmail}
+            git checkout -B master
+         )
+      withCredentials([usernamePassword(credentialsId: githubCredential, usernameVariable: gitName, passwordVariable: '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')]) {   
+            sh(
+               #!/usr/bin/env bash
+               git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
+               cd prod && kustomize edit set image ${dockerHubRegistry}:${currentBuild.number}
+               git add kustomization.yaml
+               git status
+               git commit -m "update the image tag"
+               git push origin HEAD:master
+            )   
+     }
 
   }
 }
