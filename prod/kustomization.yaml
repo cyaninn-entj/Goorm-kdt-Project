@@ -1,4 +1,0 @@
-namePrefix: demo-prod-
-resources:
-- deployment.yaml
-- service.yaml
