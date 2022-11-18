@@ -82,22 +82,21 @@ pipeline {
 
     // updated docker image 태그를 git push 
     stage('Deploy') { 
-        // 사전 준비
-        sh("""
-          git config --global user.name ${gitName}
-          git config --global user.email ${gitEmail}
-          git checkout -B master
-        """)
-    withCredentials([usernamePassword(credentialsId: githubCredential, usernameVariable: gitName, passwordVariable: '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')]) {   
-          sh("""
-              #!/usr/bin/env bash
-              git config --local credential.helper '!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f'
-              cd prod && kustomize edit set image ${dockerHubRegistry}:${currentBuild.number}
-              git add kustomization.yaml
-              git status
-              git commit -m 'update the image tag'
-              git push origin HEAD:master
-          """)   
+      steps {
+        // git 계정 로그인, 해당 레포지토리의 main 브랜치에서 클론
+        git credentialsId: githubCredential,
+            url: 'https://github.com/cyaninn-entj/mini-cicd-eks-project.git',
+            branch: 'main'  
+
+        // 이미지 태그 변경 후 메인 브랜치에 푸시
+        sh "git config --global user.email ${gitEmail}"
+        sh "git config --global user.name ${gitName}"
+        sh "cd prod && kustomize edit set image ${dockerHubRegistry}:${currentBuild.number}"
+        sh "git add kustomization.yaml"
+        sh "git status"
+        sh "git commit -m 'update the image tag'"
+        sh "git branch -M main"
+        sh "git push -u origin main"
       }
     }
   }
