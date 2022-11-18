@@ -1,9 +1,5 @@
 pipeline {
   agent any
-  // Global Tool Configuration 에서 설정한 Name
-  tools {
-    maven 'Maven3' 
-  }
 
   // 해당 스크립트 내에서 사용할 로컬 변수들 설정
   // 레포지토리가 없으면 생성됨
