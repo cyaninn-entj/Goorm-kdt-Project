@@ -2,3 +2,7 @@ namePrefix: demo-prod-
 resources:
 - deployment.yaml
 - service.yaml
+
+images:
+- name:cyaninn/demo-eks-cicd
+  newTag:

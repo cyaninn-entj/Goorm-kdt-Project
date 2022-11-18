@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-cicd-nginx-app
+  name: demo-nginx-app
 spec:
   replicas: 1
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: demo-cicd-nginx-app
+      app: demo-nginx-app
   template:
     metadata:
       labels:
         app: demo-cicd-nginx-app
     spec:
       containers:
-      - image: cyaninn/demo-eks-cicd
-        name: demo-cicd-nginx-app
+      - image: cyaninn/demo-eks-cicd:latest
+        name: demo-nginx-app
         ports:
         - containerPort: 80
