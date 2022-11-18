@@ -6,7 +6,7 @@ pipeline {
   // Credential들에는 젠킨스 크레덴셜에서 설정한 ID를 사용
   environment {
     dockerHubRegistry = 'cyaninn/demo-eks-cicd' 
-    dockerHubRegistryCredential = 'credentials-dockerHub'
+    dockerHubRegistryCredential = 'credential-dockerhub'
     githubCredential = 'credential-github'
     gitEmail = 'sounddevice3@gmail.com'
     gitName = 'cyaninn-entj'
