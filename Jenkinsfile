@@ -64,7 +64,6 @@ pipeline {
           sleep 10
         } 
       }
-
       post {
         failure {
           echo 'Docker Image Push failure'
@@ -85,19 +84,19 @@ pipeline {
      stage('Deploy') { 
          // 사전 준비
          sh(
-            git config --global user.name ${gitName}
-            git config --global user.email ${gitEmail}
-            git checkout -B master
+            "git config --global user.name ${gitName}"
+            "git config --global user.email ${gitEmail}"
+            "git checkout -B master"
          )
       withCredentials([usernamePassword(credentialsId: githubCredential, usernameVariable: gitName, passwordVariable: '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')]) {   
             sh(
                #!/usr/bin/env bash
-               git config --local credential.helper "!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f"
-               cd prod && kustomize edit set image ${dockerHubRegistry}:${currentBuild.number}
-               git add kustomization.yaml
-               git status
-               git commit -m "update the image tag"
-               git push origin HEAD:master
+               "git config --local credential.helper '!f() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; f'"
+               "cd prod && kustomize edit set image ${dockerHubRegistry}:${currentBuild.number}"
+               "git add kustomization.yaml"
+               "git status"
+               "git commit -m 'update the image tag'"
+               "git push origin HEAD:master"
             )   
      }
 
