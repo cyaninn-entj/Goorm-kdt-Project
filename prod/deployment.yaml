@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-        app: demo-cicd-nginx-app
+        app: demo-nginx-app
     spec:
       containers:
       - image: cyaninn/demo-eks-cicd:latest
