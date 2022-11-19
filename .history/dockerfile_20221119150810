@@ -1,0 +1,5 @@
+FROM node:current-slim
+
+WORKDIR /usr/src/app
+
+COPY pac
