@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: demo-nginx-app
+  name: demo-chat-app
 spec:
   ports:
   - port: 80
     targetPort: 80
   selector:
-    app: demo-nginx-app
+    app: demo-chat-app
   type: LoadBalancer

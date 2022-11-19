@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-nginx-app
+  name: demo-chat-app
 spec:
   replicas: 1
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: demo-nginx-app
+      app: demo-chat-app
   template:
     metadata:
       labels:
-        app: demo-nginx-app
+        app: demo-chat-app
     spec:
       containers:
       - image: cyaninn/demo-eks-cicd:latest
-        name: demo-nginx-app
+        name: demo-chat-app
         ports:
-        - containerPort: 80
+        - containerPort: 3000
