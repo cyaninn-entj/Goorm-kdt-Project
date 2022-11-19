@@ -1,19 +1,9 @@
-# Use the official image as a parent image.
-FROM node:current-slim
+FROM nginx
 
-# Set the working directory
-WORKDIR /app
+RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
-# Copy the file from your host to your current location.
-COPY . .
+RUN apt upgrade -y && apt-get update -y
 
-# Run the command inside your image filesystem
-RUN npm install
+COPY app/time.html /usr/share/nginx/html
 
-# Inform Docker that the container is listening on the specified port at runtime
-EXPOSE 3000
-
-# Run the specified command within the container.
-CMD ["npm", "start"]
-
-# Copy the rest of your app's source code from your host to your image filesystem.
+EXPOSE 80
