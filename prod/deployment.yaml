@@ -14,7 +14,7 @@ spec:
         app: demo-chat-app
     spec:
       containers:
-      - image: cyaninn/demo-eks-cicd:15
+      - image: cyaninn/demo-eks-cicd:latest
         name: demo-chat-app
         ports:
         - containerPort: 80
