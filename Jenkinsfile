@@ -55,7 +55,7 @@ pipeline {
     stage('Docker Image Push') {
       steps {
         // 젠킨스에 등록한 계정으로 ECR 에 이미지 푸시
-        withDockerRegistry(credentialsId: awsecrRegistryCredentail, url: '') {
+        docker.withRegistry("https://${awsecrRegistry}", "ecr:ap-northeast-2:${awsecrRegistryCredentail}") {
           sh "docker push ${awsecrRegistry}:${currentBuild.number}"
           sh "docker push ${awsecrRegistry}:latest"
           // 10초 쉰 후에 다음 작업 이어나가도록 함
