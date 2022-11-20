@@ -85,7 +85,7 @@ pipeline {
         git credentialsId: githubCredential,
             url: 'https://github.com/cyaninn-entj/mini-cicd-eks-project.git',
             branch: 'main'  
-        """
+        /*
         // 이미지 태그 변경 후 메인 브랜치에 푸시
         sh "git config --global user.email ${gitEmail}"
         sh "git config --global user.name ${gitName}"
@@ -95,7 +95,7 @@ pipeline {
         sh "git commit -m 'update the image tag'"
         sh "git branch -M main"
         sh "git push -u origin main"
-        """
+        */
       }
     }
   }
