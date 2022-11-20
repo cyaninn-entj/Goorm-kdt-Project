@@ -2,7 +2,7 @@
 FROM node:current-slim
 
 # Set the working directory
-#WORKDIR /app
+WORKDIR /home
 
 # Copy the file from your host to your current location.
 COPY app/* /home/
