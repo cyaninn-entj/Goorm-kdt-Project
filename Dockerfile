@@ -2,10 +2,10 @@
 FROM node:current-slim
 
 # Set the working directory
-WORKDIR /app
+#WORKDIR /app
 
 # Copy the file from your host to your current location.
-COPY . .
+COPY app/* /home/
 
 # Run the command inside your image filesystem
 RUN npm install
