@@ -98,8 +98,8 @@ pipeline {
         sh "git remote remove origin"
         sh "git remote add origin git@github.com:cyaninn-entj/mini-cicd-eks-project.git"
         sh "git push origin HEAD:main"
-        sh "2"
-    }
+        sh "2" */
+    } /*
     post {
         failure {
           echo 'K8S Manifest Update failure'
@@ -109,7 +109,7 @@ pipeline {
           echo 'K8s Manifest Update success'
           slackSend (color: '#0AC9FF', message: "SUCCESS: K8S Manifest Update '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
-    } */
+    }*/
     }
   }
 }
