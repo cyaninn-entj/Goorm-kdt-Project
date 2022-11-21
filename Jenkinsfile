@@ -95,7 +95,7 @@ pipeline {
         sh "git branch -M main"
         sh "git remote remove origin"
         sh "git remote add origin git@github.com:cyaninn-entj/mini-cicd-eks-project.git"
-        sh "git push -u origin main"
+        sh "git push origin main"
     }
     post {
         failure {
