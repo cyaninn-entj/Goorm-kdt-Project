@@ -1,4 +1,4 @@
-namePrefix: demo-prod-
+namePrefix: prod-
 resources:
 - deployment.yaml
 - service.yaml
