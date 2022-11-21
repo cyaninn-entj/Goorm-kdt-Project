@@ -106,6 +106,7 @@ pipeline {
           echo 'K8s Manifest Update success'
           slackSend (color: '#0AC9FF', message: "SUCCESS: K8S Manifest Update '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
-      }
+    }
+    }
   }
 }
