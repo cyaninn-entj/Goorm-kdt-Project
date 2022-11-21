@@ -98,6 +98,7 @@ pipeline {
         sh "git remote remove origin"
         sh "git remote add origin git@github.com:cyaninn-entj/mini-cicd-eks-project.git"
         sh "git push origin HEAD:main"
+        sh "2"
     }
     post {
         failure {
