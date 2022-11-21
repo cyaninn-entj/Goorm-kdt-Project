@@ -87,6 +87,8 @@ pipeline {
             branch: 'main'  
         
         // 이미지 태그 변경 후 메인 브랜치에 푸시
+        sh "git config --global --unset user.name"
+        sh "git config --global --unset user.email"
         sh "git config --global user.email ${gitEmail}"
         sh "git config --global user.name ${gitName}"
         sh "sed -i 's/latest/${currentBuild.number}/g' prod/deployment.yaml"
