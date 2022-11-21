@@ -85,18 +85,27 @@ pipeline {
         git credentialsId: githubCredential,
             url: 'https://github.com/cyaninn-entj/mini-cicd-eks-project.git',
             branch: 'main'  
-        /*
+        
         // 이미지 태그 변경 후 메인 브랜치에 푸시
         sh "git config --global user.email ${gitEmail}"
         sh "git config --global user.name ${gitName}"
-        sh "cd prod && kustomize edit set image ${awsecrRegistry}:${currentBuild.number}"
-        sh "git add kustomization.yaml"
-        sh "git status"
-        sh "git commit -m 'update the image tag'"
+        sh "sed -i 's/${awsecrRegistry}:latest/${awsecrRegistry}:${currentBuild.number}/g' prod/deployment.yaml"
+        sh "git add ."
+        sh "git commit -m 'fix:${awsecrRegistry} ${currentBuild.number} image versioning'"
         sh "git branch -M main"
+        sh "git remote remove origin"
+        sh "git remote add origin git@github.com:cyaninn-entj/mini-cicd-eks-project.git"
         sh "git push -u origin main"
-        */
-      }
     }
+    post {
+        failure {
+          echo 'K8S Manifest Update failure'
+          slackSend (color: '#FF0000', message: "FAILED: K8S Manifest Update '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+        success {
+          echo 'K8s Manifest Update success'
+          slackSend (color: '#0AC9FF', message: "SUCCESS: K8S Manifest Update '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+      }
   }
 }
