@@ -89,7 +89,7 @@ pipeline {
         // 이미지 태그 변경 후 메인 브랜치에 푸시
         sh "git config --global user.email ${gitEmail}"
         sh "git config --global user.name ${gitName}"
-        sh "sed -i 's/${awsecrRegistry}:latest/${awsecrRegistry}:${currentBuild.number}/g' prod/deployment.yaml"
+        sh "sed -i 's/latest/${currentBuild.number}/g' prod/deployment.yaml"
         sh "git add ."
         sh "git commit -m 'fix:${awsecrRegistry} ${currentBuild.number} image versioning'"
         sh "git branch -M main"
